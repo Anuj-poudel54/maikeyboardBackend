@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multiple upload</title>
+</head>
+
+<style>
+    .gallery {
+        width: 80%;
+        margin: auto;
+        display: flex;
+        gap: 1.2rem;
+        flex-wrap: wrap;
+        margin-block: 9rem;
+    }
+
+    .gallery img {
+        flex-basis: 200px;
+    }
+</style>
+
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input type="file" name="images" accept="images/*" multiple id="">
+        <br>
+        <button>Submit</button>
+    </form>
+
+    {% if images %}
+    <div class="gallery">
+        {% for image in images %}
+        <img src="{{image.image.url}}" width="400px" alt="">
+        {% endfor %}
+    </div>
+    {% endif %}
+    <script>
+
+        const files = document.querySelector("input[type=file]");
+
+        files.onchange = () => {
+            console.log(files.files);
+        }
+
+    </script>
+</body>
+
+</html>
